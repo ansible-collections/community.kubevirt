@@ -1,0 +1,24 @@
+---
+authors: 
+  - "Timothy Appnel(https://github.com/tima)"
+dependencies: {}
+description: "KubeVirt Collection of Ansible."
+documentation: ""
+homepage: ""
+issues: "https://github.com/tima/community.kubevirt/issues"
+license_file: LICENSE
+name: kubevirt
+namespace: community
+readme: README.md
+repository: "https://github.com/tima/community.kubevirt"
+tags: 
+  - kubevirt
+  - virtualization
+  - cloud
+  - infrastructure
+  - kubernetes
+  - k8s
+version: "0.0.1"
+build_ignore: 
+  - .DS_Store
+  - "*.tar.gz"
