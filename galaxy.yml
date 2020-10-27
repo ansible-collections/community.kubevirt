@@ -1,24 +1,31 @@
----
-authors: 
-  - "Timothy Appnel(https://github.com/tima)"
-dependencies: {}
-description: "KubeVirt Collection of Ansible."
-documentation: ""
-homepage: ""
-issues: "https://github.com/tima/community.kubevirt/issues"
-license_file: LICENSE
-name: kubevirt
+# See https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html
+
 namespace: community
+name: kubevirt 
+version: 0.1.0
 readme: README.md
-repository: "https://github.com/tima/community.kubevirt"
-tags: 
+authors:
+  - kubevirt (github.com/kubevirt)
+  - tima (github.com/tima)
+description: 
+license_file: LICENSE
+tags:
+# tags so people can search for collections https://galaxy.ansible.com/search
+# tags are all lower-case, no spaces, no dashes.
+  - api
+  - k8s
+  - kubernetes
   - kubevirt
   - virtualization
   - cloud
   - infrastructure
-  - kubernetes
-  - k8s
-version: "0.0.1"
-build_ignore: 
+repository: https://github.com/ansible-collections/community.kubevirt
+#documentation: https://github.com/ansible-collection-migration/community.kubevirt/tree/main/docs
+homepage: https://github.com/ansible-collections/community.kubevirt
+issues: https://github.com/ansible-collections/community.kubevirt/issues
+build_ignore:
+# https://docs.ansible.com/ansible/devel/dev_guide/developing_collections.html#ignoring-files-and-folders
+  - .gitignore
+  - changelogs/.plugin-cache.yaml
   - .DS_Store
   - "*.tar.gz"
