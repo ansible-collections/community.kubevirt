@@ -46,8 +46,8 @@ options:
 
 extends_documentation_fragment:
 - community.kubernetes.k8s_auth_options
-- community.general.kubevirt_vm_options
-- community.general.kubevirt_common_options
+- community.kubevirt.kubevirt_vm_options
+- community.kubevirt.kubevirt_common_options
 
 
 requirements:
