@@ -3,11 +3,11 @@ __metaclass__ = type
 
 import pytest
 
-from ansible_collections.community.general.tests.unit.compat.mock import MagicMock
+from ansible_collections.community.kubevirt.tests.unit.compat.mock import MagicMock
 
 from ansible_collections.community.kubernetes.plugins.module_utils.common import K8sAnsibleMixin
 from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
-from ansible_collections.community.general.plugins.module_utils.kubevirt import KubeVirtRawModule
+from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import KubeVirtRawModule
 
 import openshift.dynamic
 
