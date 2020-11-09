@@ -4,7 +4,7 @@ __metaclass__ = type
 import json
 import pytest
 
-from ansible_collections.community.general.plugins.module_utils import kubevirt as mymodule
+from ansible_collections.community.kubevirt.plugins.module_utils import kubevirt as mymodule
 
 
 def test_simple_merge_dicts():

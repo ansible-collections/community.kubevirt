@@ -1,6 +1,6 @@
 # KubeVirt Collection for Ansible
 <!-- Add CI and code coverage badges here. Samples included below. -->
-[![CI](https://github.com/ansible-collections/REPONAMEHERE/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/REPONAMEHERE/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/REPONAMEHERE)](https://codecov.io/gh/ansible-collections/REPONAMEHERE)
+[![CI](https://github.com/ansible-collections/community.kubevirt/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/community.kubevirt/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/community.kubevirt)](https://codecov.io/gh/ansible-collections/community.kubevirt)
 
 <!-- Describe the collection and why a user would want to use it. What does the collection do? -->
 

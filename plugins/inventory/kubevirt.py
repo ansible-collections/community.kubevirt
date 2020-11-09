@@ -151,7 +151,7 @@ API_VERSION = 'kubevirt.io/v1alpha3'
 
 
 class InventoryModule(K8sInventoryModule):
-    NAME = 'community.general.kubevirt'
+    NAME = 'community.kubevirt.kubevirt'
 
     def setup(self, config_data, cache, cache_key):
         self.config_data = config_data
