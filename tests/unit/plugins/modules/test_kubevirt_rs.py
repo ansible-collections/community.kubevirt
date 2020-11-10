@@ -9,7 +9,7 @@ from ansible_collections.community.kubevirt.tests.unit.plugins.modules.utils imp
 from .kubevirt_fixtures import base_fixture, RESOURCE_DEFAULT_ARGS, AnsibleExitJson
 
 from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
-from ansible_collections.community.kubevirt.plugins.modules.cloud.kubevirt import kubevirt_rs as mymodule
+from ansible_collections.community.kubevirt.plugins.modules import kubevirt_rs as mymodule
 
 KIND = 'VirtualMachineInstanceReplicaSet'
 
