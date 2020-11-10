@@ -9,6 +9,7 @@ fi
 set -eux
 
 # TODO: quay.io/ansible/default-test-container:2.7.0 doesn't have virtualenv included
+apt -y update
 apt -y install python3-virtualenv
 
 source virtualenv.sh

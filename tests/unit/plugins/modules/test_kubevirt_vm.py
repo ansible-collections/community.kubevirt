@@ -9,7 +9,7 @@ from ansible_collections.community.kubevirt.tests.unit.plugins.modules.utils imp
 from .kubevirt_fixtures import base_fixture, RESOURCE_DEFAULT_ARGS, AnsibleExitJson
 
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import KubeVirtRawModule
-from ansible_collections.community.kubevirt.plugins.modules.cloud.kubevirt import kubevirt_vm as mymodule
+from ansible_collections.community.kubevirt.plugins.modules import kubevirt_vm as mymodule
 
 KIND = 'VirtulMachine'
 

@@ -10,8 +10,8 @@ on:
   push:
   pull_request:
   # Uncomment the following two lines to run CI once per day (at 06:00 UTC)
-  # schedule:
-  #   - cron: '0 6 * * *'
+  schedule:
+    - cron: '0 6 * * *'
 env:
   NAMESPACE: community
   COLLECTION_NAME: kubevirt
@@ -30,7 +30,7 @@ jobs:
         ansible:
           # It's important that Sanity is tested against all stable-X.Y branches
           # Testing against `devel` may fail as new tests are added.
-          - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9
           - stable-2.10
           - devel
     runs-on: ubuntu-latest
@@ -72,36 +72,25 @@ jobs:
 
   units:
     runs-on: ubuntu-latest
-    name: Units (Ⓐ${{ matrix.ansible }}+py${{ matrix.python }})
+    name: Units (Ⓐ${{ matrix.ansible }})
     strategy:
       # As soon as the first unit test fails, cancel the others to free up the CI queue
       fail-fast: true
       matrix:
         ansible:
-          # - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9
           - stable-2.10
           - devel
-        python:
-          - 2.7
-          - 3.5
-          - 3.6
-          - 3.7
-          - 3.8
-          - 3.9
-        exclude:
-          - ansible: stable-2.9
-            python: 3.9
-
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-      - name: Set up Python ${{ matrix.ansible }}
+      - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python }}
+          python-version: 3.8
 
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
@@ -111,7 +100,7 @@ jobs:
 
       # Run the unit tests
       - name: Run unit test
-        run: ansible-test units -v --color --python ${{ matrix.python }} --docker --coverage
+        run: ansible-test units -v --color --docker --coverage
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
         # ansible-test support producing code coverage date
@@ -141,7 +130,7 @@ jobs:
       fail-fast: false
       matrix:
         ansible:
-          # - stable-2.9 # Only if your collection supports Ansible 2.9
+          - stable-2.9
           - stable-2.10
           - devel
         python:
