@@ -11,9 +11,7 @@ v0.1.0
 Release Summary
 ---------------
 
-This is the first pre-release version of community.google after migrating from
-community.general.
-
+This is the first pre-release version of community.kubevirt after migrating from community.general.
 
 Bugfixes
 --------
