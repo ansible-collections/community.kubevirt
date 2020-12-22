@@ -10,3 +10,9 @@ releases:
     - 0.1.0.yml
     - 55903_kubevirt.yml
     release_date: '2020-11-25'
+  1.0.0:
+    changes:
+      release_summary: This is the first stable release version of community.kubevirt.
+    fragments:
+    - 1.0.0.yaml
+    release_date: '2020-12-22'
