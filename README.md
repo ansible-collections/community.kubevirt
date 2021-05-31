@@ -30,7 +30,7 @@ See the [changelog](https://github.com/ansible-collections/community.kubevirt/tr
 
 ## More Information
 
-For more information about Ansible's Kubernetes integration, join the `#ansible-kubernetes` channel on Freenode IRC, and browse the resources in the [Kubernetes Working Group](https://github.com/ansible/community/wiki/Kubernetes) Community wiki page.
+For more information about Ansible's Kubernetes integration, join the `#ansible-kubernetes` IRC channel on [irc.libera.chat](https://libera.chat/), and browse the resources in the [Kubernetes Working Group](https://github.com/ansible/community/wiki/Kubernetes) Community wiki page.
 
 - [Ansible Collection overview](https://github.com/ansible-collections/overview)
 - [Ansible User guide](https://docs.ansible.com/ansible/latest/user_guide/index.html)
