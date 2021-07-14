@@ -8,7 +8,7 @@ openshiftdynamic = pytest.importorskip("openshift.dynamic")
 from ansible_collections.community.kubevirt.tests.unit.plugins.modules.utils import set_module_args
 from .kubevirt_fixtures import base_fixture, RESOURCE_DEFAULT_ARGS, AnsibleExitJson
 
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.raw import KubernetesRawModule
 from ansible_collections.community.kubevirt.plugins.modules import kubevirt_rs as mymodule
 
 KIND = 'VirtualMachineInstanceReplicaSet'

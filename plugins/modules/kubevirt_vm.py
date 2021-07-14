@@ -67,7 +67,7 @@ options:
         type: dict
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 - community.kubevirt.kubevirt_vm_options
 - community.kubevirt.kubevirt_common_options
 
@@ -245,7 +245,7 @@ kubevirt_vm:
 import copy
 import traceback
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
+from ansible_collections.kubernetes.core.plugins.module_utils.common import AUTH_ARG_SPEC
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import (
     virtdict,
     KubeVirtRawModule,

@@ -11,8 +11,8 @@ from distutils.version import Version
 
 from ansible.module_utils.common import dict_transformations
 from ansible.module_utils.common._collections_compat import Sequence
-from ansible_collections.community.kubernetes.plugins.module_utils.common import list_dict_str
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.common import list_dict_str
+from ansible_collections.kubernetes.core.plugins.module_utils.raw import KubernetesRawModule
 
 import copy
 import re
