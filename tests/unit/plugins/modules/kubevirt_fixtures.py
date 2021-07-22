@@ -6,8 +6,8 @@ import pytest
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.community.kubevirt.tests.unit.compat.mock import MagicMock
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import K8sAnsibleMixin
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.common import K8sAnsibleMixin
+from ansible_collections.kubernetes.core.plugins.module_utils.raw import KubernetesRawModule
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import KubeVirtRawModule
 
 import openshift.dynamic
