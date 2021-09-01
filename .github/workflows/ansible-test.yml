@@ -57,7 +57,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       - name: Install collection dependencies
-        run: ansible-galaxy collection install community.kubernetes -p .
+        run: ansible-galaxy collection install kubernetes.core -p .
 
       # run ansible-test sanity inside of Docker.
       # The docker container has all the pinned dependencies that are required
@@ -98,7 +98,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       - name: Install collection dependencies
-        run: ansible-galaxy collection install community.kubernetes -p .
+        run: ansible-galaxy collection install kubernetes.core -p .
 
       # Run the unit tests
       - name: Run unit test
@@ -162,7 +162,7 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       - name: Install collection dependencies
-        run: ansible-galaxy collection install community.kubernetes -p .
+        run: ansible-galaxy collection install kubernetes.core -p .
 
       # Run the integration tests
       - name: Run integration test

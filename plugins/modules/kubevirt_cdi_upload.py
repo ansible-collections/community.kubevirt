@@ -53,7 +53,7 @@ options:
     choices: [ json, merge, strategic-merge ]
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 
 
 requirements:
@@ -79,8 +79,8 @@ import traceback
 
 from collections import defaultdict
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.common import AUTH_ARG_SPEC
+from ansible_collections.kubernetes.core.plugins.module_utils.raw import KubernetesRawModule
 
 # 3rd party imports
 try:

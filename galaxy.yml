@@ -8,7 +8,7 @@ authors:
   - kubevirt (github.com/kubevirt)
   - tima (github.com/tima)
 dependencies:
-  community.kubernetes: '>=1.0.0'
+  kubernetes.core: '>=1.0.0'
 description: 
 license_file: LICENSE
 tags:

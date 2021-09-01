@@ -140,7 +140,7 @@ connections:
 
 import json
 
-from ansible_collections.community.kubernetes.plugins.inventory.k8s import K8sInventoryException, InventoryModule as K8sInventoryModule, format_dynamic_api_exc
+from ansible_collections.kubernetes.core.plugins.inventory.k8s import K8sInventoryException, InventoryModule as K8sInventoryModule, format_dynamic_api_exc
 
 try:
     from openshift.dynamic.exceptions import DynamicApiError
