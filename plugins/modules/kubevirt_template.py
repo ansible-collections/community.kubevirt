@@ -133,8 +133,8 @@ options:
         type: str
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
-- community.kubernetes.k8s_state_options
+- kubernetes.core.k8s_auth_options
+- kubernetes.core.k8s_state_options
 
 
 requirements:
@@ -201,7 +201,7 @@ kubevirt_template:
 import copy
 import traceback
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
+from ansible_collections.kubernetes.core.plugins.module_utils.common import AUTH_ARG_SPEC
 
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import (
     virtdict,
