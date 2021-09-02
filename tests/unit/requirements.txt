@@ -1,2 +1,4 @@
 # requirement for kubevirt modules
 openshift ; python_version >= '2.7'
+ruamel.yaml < 0.17 ; python_version >= '2.7' and python_version < '3.5'
+ruamel.yaml.clib < 0.2.3 ; python_version >= '2.7' and python_version < '3.5'
