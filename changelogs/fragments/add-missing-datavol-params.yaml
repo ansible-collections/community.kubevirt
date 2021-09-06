@@ -1,2 +1,2 @@
 bugfixes:
-  - kubevirt_vm - Adds missing storageClassName and volumeMode parameters to datavol class (https://github.com/ansible-collections/community.kubevirt/issues/12)
+  - kubevirt_vm - Adds missing ``storageClassName`` and ``volumeMode`` parameters to datavol class (https://github.com/ansible-collections/community.kubevirt/issues/12)
