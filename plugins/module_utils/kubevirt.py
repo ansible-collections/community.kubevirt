@@ -167,7 +167,7 @@ class KubeVirtRawModule(KubernetesRawModule):
 
     def _define_datavolumes(self, datavolumes, spec):
         """
-        Takes datavoulmes parameter of Ansible and create kubevirt API datavolumesTemplateSpec
+        Takes datavolumes parameter of Ansible and create kubevirt API datavolumesTemplateSpec
         structure from it
         """
         if not datavolumes:
@@ -180,6 +180,8 @@ class KubeVirtRawModule(KubernetesRawModule):
             dvt['metadata']['name'] = dv.get('name')
             dvt['spec']['pvc'] = {
                 'accessModes': dv.get('pvc').get('accessModes'),
+                'storageClassName': dv.get('pvc').get('storageClassName'),
+                'volumeMode': dv.get('pvc').get('volumeMode'),
                 'resources': {
                     'requests': {
                         'storage': dv.get('pvc').get('storage'),
