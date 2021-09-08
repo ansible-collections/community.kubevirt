@@ -429,6 +429,9 @@ class KubeVirtRawModule(KubernetesRawModule):
         # Define disks
         self._define_disks(disks, template_spec, defaults)
 
+        # Define datavolumes:
+        self._define_datavolumes(datavolumes, definition['spec'])
+
         # Define cloud init disk if defined:
         # Note, that this must be called after _define_disks, so the cloud_init
         # is not first in order and it's not used as boot disk:
@@ -436,9 +439,6 @@ class KubeVirtRawModule(KubernetesRawModule):
 
         # Define interfaces:
         self._define_interfaces(interfaces, template_spec, defaults)
-
-        # Define datavolumes:
-        self._define_datavolumes(datavolumes, definition['spec'])
 
         return self.merge_dicts(definition, self.resource_definitions[0])
 

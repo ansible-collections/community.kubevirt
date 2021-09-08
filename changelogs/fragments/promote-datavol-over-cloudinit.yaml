@@ -1,0 +1,2 @@
+bugfixes:
+  - kubevirt_vm - Create datavol before cloudinit disk as its more likely to be a boot volume (https://github.com/ansible-collections/community.kubevirt/pull/20)
