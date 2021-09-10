@@ -138,7 +138,7 @@ options:
     default: 300
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 
 
 requirements:

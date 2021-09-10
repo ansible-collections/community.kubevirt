@@ -45,7 +45,7 @@ options:
         type: dict
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 - community.kubevirt.kubevirt_vm_options
 - community.kubevirt.kubevirt_common_options
 
