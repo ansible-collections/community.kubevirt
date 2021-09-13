@@ -15,7 +15,7 @@ module: kubevirt_vm
 short_description: Manage KubeVirt virtual machine
 
 description:
-    - Use Openshift Python SDK to manage the state of KubeVirt virtual machines.
+    - Use Kubernetes Python SDK to manage the state of KubeVirt virtual machines.
 
 
 author: KubeVirt Team (@kubevirt)
@@ -67,14 +67,14 @@ options:
         type: dict
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 - community.kubevirt.kubevirt_vm_options
 - community.kubevirt.kubevirt_common_options
 
 
 requirements:
-  - python >= 2.7
-  - openshift >= 0.8.2
+  - python >= 3.6
+  - kubernetes >= 12.0.1
 '''
 
 EXAMPLES = '''
@@ -245,7 +245,9 @@ kubevirt_vm:
 import copy
 import traceback
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
+from ansible_collections.kubernetes.core.plugins.module_utils.common import get_api_client
+from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC
+
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import (
     virtdict,
     KubeVirtRawModule,
@@ -421,7 +423,7 @@ class KubeVirtVM(KubeVirtRawModule):
         # Start with fetching the current object to make sure it exists
         # If it does, but we end up not performing any operations on it, at least we'll be able to return
         # its current contents as part of the final json
-        self.client = self.get_api_client()
+        self.client = get_api_client(self.module)
         self._kind_resource = self.find_supported_resource(kind)
         k8s_obj = self.get_resource(self._kind_resource)
         if not self.check_mode and not vm_spec_change and k8s_state != 'absent' and not k8s_obj:

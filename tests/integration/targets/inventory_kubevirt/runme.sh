@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $(python --version 2>&1) =~ 2\.6 ]]
-  then
-    echo "Openshift client is not supported on Python 2.6"
-    exit 0
-fi
-
 set -eux
 
 # TODO: quay.io/ansible/default-test-container:2.7.0 doesn't have virtualenv included
@@ -13,7 +7,7 @@ apt -y update
 apt -y install python3-virtualenv
 
 source virtualenv.sh
-pip install openshift -c constraints.txt
+pip install --upgrade kubernetes
 
 ./server.py &
 

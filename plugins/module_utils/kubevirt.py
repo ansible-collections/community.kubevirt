@@ -6,16 +6,28 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
+import traceback
+import copy
+import re
+
 from collections import defaultdict
 from distutils.version import Version
 
 from ansible.module_utils.common import dict_transformations
 from ansible.module_utils.common._collections_compat import Sequence
-from ansible_collections.community.kubernetes.plugins.module_utils.common import list_dict_str
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
 
-import copy
-import re
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils._text import to_native
+
+from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC, list_dict_str
+from ansible_collections.kubernetes.core.plugins.module_utils.common import K8sAnsibleMixin, get_api_client
+
+try:
+    import yaml
+    from kubernetes.dynamic.exceptions import DynamicApiError, NotFoundError, ForbiddenError
+except ImportError:
+    # Exceptions handled in common
+    pass
 
 MAX_SUPPORTED_API_VERSION = 'v1alpha3'
 API_GROUP = 'kubevirt.io'
@@ -132,9 +144,37 @@ class KubeAPIVersion(Version):
         return self._cmp(other)
 
 
-class KubeVirtRawModule(KubernetesRawModule):
-    def __init__(self, *args, **kwargs):
-        super(KubeVirtRawModule, self).__init__(*args, **kwargs)
+class KubeVirtRawModule(K8sAnsibleMixin):
+    def __init__(self, k8s_kind=None, *args, **kwargs):
+        module = AnsibleModule(
+            argument_spec=self.argspec,
+            supports_check_mode=True,
+        )
+
+        self.module = module
+        self.check_mode = self.module.check_mode
+        self.params = self.module.params
+        self.fail_json = self.module.fail_json
+        self.fail = self.module.fail_json
+        self.exit_json = self.module.exit_json
+
+        super(KubeVirtRawModule, self).__init__(module, *args, **kwargs)
+
+        self.client = get_api_client(self.module)
+        self.warnings = []
+
+        self.kind = k8s_kind or self.params.get('kind')
+        self.api_version = self.params.get('api_version')
+        self.name = self.params.get('name')
+        self.namespace = self.params.get('namespace')
+
+        self.check_library_version()
+        self.set_resource_definitions(module)
+
+    @property
+    def argspec(self):
+        argument_spec = copy.deepcopy(AUTH_ARG_SPEC)
+        return argument_spec
 
     @staticmethod
     def merge_dicts(base_dict, merging_dicts):
@@ -306,7 +346,7 @@ class KubeVirtRawModule(KubernetesRawModule):
             str([r.api_version for r in sr]), API_GROUP, MAX_SUPPORTED_API_VERSION))
 
     def _construct_vm_definition(self, kind, definition, template, params, defaults=None):
-        self.client = self.get_api_client()
+        self.client = get_api_client(self.module)
 
         disks = params.get('disks', [])
         memory = params.get('memory')

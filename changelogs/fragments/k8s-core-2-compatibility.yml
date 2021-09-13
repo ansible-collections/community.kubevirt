@@ -1,0 +1,4 @@
+major_changes:
+  - Drop Python 2.7 compatibility (https://github.com/ansible-collections/community.kubevirt/issues/33).
+  - Migrate from the ``community.kubernetes`` to ``kubernetes.core`` collection dependency (https://github.com/ansible-collections/community.kubevirt/issues/33).
+  - Change references from ``OpenShift`` to ``Kubernetes`` in the documentation (https://github.com/ansible-collections/community.kubevirt/issues/33).

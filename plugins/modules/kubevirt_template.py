@@ -15,7 +15,7 @@ module: kubevirt_template
 short_description: Manage KubeVirt templates
 
 description:
-    - Use Openshift Python SDK to manage the state of KubeVirt templates.
+    - Use Kubernetes Python SDK to manage the state of KubeVirt templates.
 
 
 author: KubeVirt Team (@kubevirt)
@@ -77,7 +77,7 @@ options:
         description:
             - "Extension for hinting at which elements should be considered editable.
                List of jsonpath selectors. The jsonpath root is the objects: element of the template."
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: list
     default_disk:
         description:
@@ -85,7 +85,7 @@ options:
                terms of bus (ide, scsi, sata, virtio, ...)"
             - The C(default_disk) parameter define configuration overlay for disks that will be applied on top of disks
               during virtual machine creation to define global compatibility and/or performance defaults defined here.
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: dict
     default_volume:
         description:
@@ -93,7 +93,7 @@ options:
                caches if those are exposed by the underlying volume implementation."
             - The C(default_volume) parameter define configuration overlay for volumes that will be applied on top of volumes
               during virtual machine creation to define global compatibility and/or performance defaults defined here.
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: dict
     default_nic:
         description:
@@ -101,7 +101,7 @@ options:
                to ensure OS compatibility and performance."
             - The C(default_nic) parameter define configuration overlay for nic that will be applied on top of nics
               during virtual machine creation to define global compatibility and/or performance defaults defined here.
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: dict
     default_network:
         description:
@@ -109,7 +109,7 @@ options:
                that specifies performance and connection parameters (L2 bridge for example)"
             - The C(default_network) parameter define configuration overlay for networks that will be applied on top of networks
               during virtual machine creation to define global compatibility and/or performance defaults defined here.
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: dict
     icon_class:
         description:
@@ -129,17 +129,17 @@ options:
     version:
         description:
             - Template structure version.
-            - This is parameter can be used only when kubevirt addon is installed on your openshift cluster.
+            - This is parameter can be used only when kubevirt addon is installed on your kubernetes cluster.
         type: str
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
-- community.kubernetes.k8s_state_options
+- kubernetes.core.k8s_auth_options
+- kubernetes.core.k8s_state_options
 
 
 requirements:
-  - python >= 2.7
-  - openshift >= 0.8.2
+  - python >= 3.6
+  - kubernetes >= 12.0.1
 '''
 
 EXAMPLES = '''
@@ -201,7 +201,15 @@ kubevirt_template:
 import copy
 import traceback
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
+try:
+    from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC
+    from ansible_collections.kubernetes.core.plugins.module_utils.common import get_api_client
+    HAS_KUBERNETES_COLLECTION = True
+except ImportError as e:
+    HAS_KUBERNETES_COLLECTION = False
+    k8s_collection_import_exception = e
+    K8S_COLLECTION_ERROR = traceback.format_exc()
+    AUTH_ARG_SPEC = {}
 
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import (
     virtdict,
@@ -298,7 +306,7 @@ class KubeVirtVMTemplate(KubeVirtRawModule):
         labels = definition['metadata']['labels']
         labels['template.cnv.io/type'] = 'vm'
 
-        # Fill in Openshift/Kubevirt template annotations:
+        # Fill in Kubernetes/Kubevirt template annotations:
         annotations = definition['metadata']['annotations']
         if self.params.get('display_name'):
             annotations['openshift.io/display-name'] = self.params.get('display_name')
@@ -332,7 +340,7 @@ class KubeVirtVMTemplate(KubeVirtRawModule):
             annotations['defaults.template.cnv.io/network'] = self.params.get('default_network').get('name')
 
         # Process objects:
-        self.client = self.get_api_client()
+        self.client = get_api_client(self.module)
         definition['objects'] = []
         objects = self.params.get('objects') or []
         for obj in objects:

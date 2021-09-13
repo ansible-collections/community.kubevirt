@@ -58,8 +58,8 @@ Every voice is important and every idea is valuable. If you have something on yo
 
 ## External requirements
 
-- python >= 2.7
-- openshift >= 0.8.2
+- python >= 3.6
+- kubernetes >= 12.0.1
 
 ##  Included Content
 

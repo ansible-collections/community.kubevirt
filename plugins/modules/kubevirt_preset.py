@@ -15,7 +15,7 @@ module: kubevirt_preset
 short_description: Manage KubeVirt virtual machine presets
 
 description:
-    - Use Openshift Python SDK to manage the state of KubeVirt virtual machine presets.
+    - Use Kubernetes Python SDK to manage the state of KubeVirt virtual machine presets.
 
 
 author: KubeVirt Team (@kubevirt)
@@ -45,14 +45,14 @@ options:
         type: dict
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 - community.kubevirt.kubevirt_vm_options
 - community.kubevirt.kubevirt_common_options
 
 
 requirements:
-  - python >= 2.7
-  - openshift >= 0.8.2
+  - python >= 3.6
+  - kubernetes >= 12.0.1
 '''
 
 EXAMPLES = '''
@@ -87,8 +87,7 @@ kubevirt_preset:
 import copy
 import traceback
 
-
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
+from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC
 
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import (
     virtdict,
@@ -128,7 +127,7 @@ class KubeVirtVMPreset(KubeVirtRawModule):
         # defaults for template
         defaults = {'disks': [], 'volumes': [], 'interfaces': [], 'networks': []}
 
-        # Execute the CURD of VM:
+        # Execute the CRUD of VM:
         dummy, definition = self.construct_vm_definition(KIND, definition, definition, defaults)
         result_crud = self.execute_crud(KIND, definition)
         changed = result_crud['changed']

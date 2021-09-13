@@ -26,6 +26,7 @@ jobs:
   sanity:
     name: Sanity (Ⓐ${{ matrix.ansible }})
     strategy:
+      fail-fast: true
       matrix:
         ansible:
           # It's important that Sanity is tested against all stable-X.Y branches
@@ -56,8 +57,11 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
+      - name: Install deps
+        run: pip install kubernetes --disable-pip-version-check
+
       - name: Install collection dependencies
-        run: ansible-galaxy collection install 'community.kubernetes:<2.0.0' -p .
+        run: ansible-galaxy collection install 'kubernetes.core' -p .
 
       # run ansible-test sanity inside of Docker.
       # The docker container has all the pinned dependencies that are required
@@ -97,12 +101,18 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
+      - name: Remove old pyyaml
+        run: pip uninstall -y pyyaml
+
+      - name: Install deps
+        run: pip install kubernetes --disable-pip-version-check
+
       - name: Install collection dependencies
-        run: ansible-galaxy collection install 'community.kubernetes:<2.0.0' -p .
+        run: ansible-galaxy collection install 'kubernetes.core' -p .
 
       # Run the unit tests
       - name: Run unit test
-        run: ansible-test units -v --color --docker --coverage
+        run: ansible-test units -v --color --docker --python 3.8 --coverage
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
         # ansible-test support producing code coverage date
@@ -137,10 +147,6 @@ jobs:
           - stable-2.11
           - devel
         python:
-          - 2.7
-          - 3.5
-          - 3.6
-          - 3.7
           - 3.8
           - 3.9
         exclude:
@@ -161,8 +167,11 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
+      - name: Install deps
+        run: pip install kubernetes --disable-pip-version-check
+
       - name: Install collection dependencies
-        run: ansible-galaxy collection install 'community.kubernetes:<2.0.0' -p .
+        run: ansible-galaxy collection install 'kubernetes.core' -p .
 
       # Run the integration tests
       - name: Run integration test

@@ -45,7 +45,7 @@ DOCUMENTATION = '''
             kubeconfig:
                 description:
                 - Path to an existing Kubernetes config file. If not provided, and no other connection
-                    options are provided, the OpenShift client will attempt to load the default
+                    options are provided, the Kubernetes client will attempt to load the default
                     configuration file from I(~/.kube/config.json). Can also be specified via K8S_AUTH_KUBECONFIG
                     environment variable.
                 type: str
@@ -115,7 +115,7 @@ DOCUMENTATION = '''
                 type: str
                 default: 'ansible'
     requirements:
-    - "openshift >= 0.6"
+    - "kubernetes >= 12.0.1"
     - "PyYAML >= 3.11"
 '''
 
@@ -140,7 +140,8 @@ connections:
 
 import json
 
-from ansible_collections.community.kubernetes.plugins.inventory.k8s import K8sInventoryException, InventoryModule as K8sInventoryModule, format_dynamic_api_exc
+from ansible_collections.kubernetes.core.plugins.inventory.k8s import K8sInventoryException, InventoryModule as K8sInventoryModule, format_dynamic_api_exc
+from ansible_collections.kubernetes.core.plugins.module_utils.common import get_api_client
 
 try:
     from openshift.dynamic.exceptions import DynamicApiError
@@ -159,12 +160,12 @@ class InventoryModule(K8sInventoryModule):
         super(InventoryModule, self).setup(config_data, cache, cache_key)
 
     def fetch_objects(self, connections):
-        client = self.get_api_client()
+        client = get_api_client()
         vm_format = self.config_data.get('host_format', '{namespace}-{name}-{uid}')
 
         if connections:
             for connection in connections:
-                client = self.get_api_client(**connection)
+                client = get_api_client(**connection)
                 name = connection.get('name', self.get_default_host_name(client.configuration.host))
                 if connection.get('namespaces'):
                     namespaces = connection['namespaces']

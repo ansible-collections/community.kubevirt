@@ -122,10 +122,10 @@ options:
                the virtual machine will not have a domain name at all. The DNS entry will resolve to the virtual machine, no matter if the virtual machine
                itself can pick up a hostname."
 requirements:
-    - python >= 2.7
-    - openshift >= 0.8.2
+    - python >= 3.6
+    - kubernetes >= 12.0.1
 notes:
-  - "In order to use this module you have to install Openshift Python SDK.
+  - "In order to use this module you have to install Kubernetes Python SDK.
      To ensure it's installed with correct version you can create the following task:
-     I(pip: name=openshift>=0.8.2)"
+     I(pip: name=kubernetes>=12.0.1)"
 '''

@@ -20,7 +20,7 @@ author: KubeVirt Team (@kubevirt)
 
 
 description:
-  - Use Openshift Python SDK to create UploadTokenRequest objects.
+  - Use Kubernetes Python SDK to create UploadTokenRequest objects.
   - Transfer contents of local files to the CDI Upload Proxy.
 
 options:
@@ -59,12 +59,12 @@ options:
     choices: [ json, merge, strategic-merge ]
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 
 
 requirements:
-  - python >= 2.7
-  - openshift >= 0.8.2
+  - python >= 3.6
+  - kubernetes >= 12.0.1
   - requests >= 2.0.0
 '''
 
@@ -84,9 +84,11 @@ import copy
 import traceback
 
 from collections import defaultdict
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils._text import to_native
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.common import K8sAnsibleMixin, get_api_client
+from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC
 
 # 3rd party imports
 try:
@@ -113,9 +115,15 @@ SERVICE_ARG_SPEC = {
 }
 
 
-class KubeVirtCDIUpload(KubernetesRawModule):
+class KubeVirtCDIUpload(K8sAnsibleMixin):
     def __init__(self, *args, **kwargs):
-        super(KubeVirtCDIUpload, self).__init__(*args, k8s_kind='UploadTokenRequest', **kwargs)
+        self.module = AnsibleModule(
+            argument_spec=self.argspec,
+            supports_check_mode=True,
+        )
+        self.fail_json = self.module.fail_json
+
+        super(KubeVirtCDIUpload, self).__init__(self.module, *args, k8s_kind='UploadTokenRequest', **kwargs)
 
         if not HAS_REQUESTS:
             self.fail("This module requires the python 'requests' package. Try `pip install requests`.")
@@ -133,7 +141,7 @@ class KubeVirtCDIUpload(KubernetesRawModule):
         API = 'v1alpha1'
         KIND = 'UploadTokenRequest'
 
-        self.client = self.get_api_client()
+        self.client = get_api_client(self.module)
 
         api_version = 'upload.cdi.kubevirt.io/{0}'.format(API)
         pvc_name = self.params.get('pvc_name')

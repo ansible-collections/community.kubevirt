@@ -1,3 +1,10 @@
+plugins/modules/kubevirt_cdi_upload.py import-2.6!skip
 plugins/modules/kubevirt_preset.py validate-modules:parameter-type-not-in-doc
+plugins/modules/kubevirt_preset.py import-2.6!skip
 plugins/modules/kubevirt_rs.py validate-modules:parameter-type-not-in-doc
+plugins/modules/kubevirt_rs.py import-2.6!skip
 plugins/modules/kubevirt_vm.py validate-modules:parameter-type-not-in-doc
+plugins/modules/kubevirt_vm.py import-2.6!skip
+plugins/modules/kubevirt_pvc.py import-2.6!skip
+plugins/modules/kubevirt_template.py import-2.6!skip
+plugins/module_utils/kubevirt.py import-2.6!skip

@@ -3,7 +3,7 @@ __metaclass__ = type
 
 import pytest
 
-openshiftdynamic = pytest.importorskip("openshift.dynamic")
+kubernetesdynamic = pytest.importorskip("openshift.dynamic")
 
 from ansible_collections.community.kubevirt.tests.unit.plugins.modules.utils import set_module_args
 from .kubevirt_fixtures import base_fixture, RESOURCE_DEFAULT_ARGS, AnsibleExitJson
@@ -11,7 +11,7 @@ from .kubevirt_fixtures import base_fixture, RESOURCE_DEFAULT_ARGS, AnsibleExitJ
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import KubeVirtRawModule
 from ansible_collections.community.kubevirt.plugins.modules import kubevirt_vm as mymodule
 
-KIND = 'VirtulMachine'
+KIND = 'VirtualMachine'
 
 
 @pytest.mark.usefixtures("base_fixture")
@@ -30,8 +30,8 @@ def test_create_vm_with_multus_nowait():
 
     # State as "returned" by the "k8s cluster":
     resource_args = dict(kind=KIND, **RESOURCE_DEFAULT_ARGS)
-    KubeVirtRawModule.find_supported_resource.return_value = openshiftdynamic.Resource(**resource_args)
-    openshiftdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
+    KubeVirtRawModule.find_supported_resource.return_value = kubernetesdynamic.Resource(**resource_args)
+    kubernetesdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
 
     # Run code:
     with pytest.raises(AnsibleExitJson) as result:
@@ -55,8 +55,8 @@ def test_vm_is_absent(_wait):
 
     # State as "returned" by the "k8s cluster":
     resource_args = dict(kind=KIND, **RESOURCE_DEFAULT_ARGS)
-    KubeVirtRawModule.find_supported_resource.return_value = openshiftdynamic.Resource(**resource_args)
-    openshiftdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
+    KubeVirtRawModule.find_supported_resource.return_value = kubernetesdynamic.Resource(**resource_args)
+    kubernetesdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
 
     # Run code:
     with pytest.raises(AnsibleExitJson) as result:
@@ -78,8 +78,8 @@ def test_vmpreset_create():
 
     # State as "returned" by the "k8s cluster":
     resource_args = dict(kind=KIND, **RESOURCE_DEFAULT_ARGS)
-    KubeVirtRawModule.find_supported_resource.return_value = openshiftdynamic.Resource(**resource_args)
-    openshiftdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
+    KubeVirtRawModule.find_supported_resource.return_value = kubernetesdynamic.Resource(**resource_args)
+    kubernetesdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
 
     # Run code:
     with pytest.raises(AnsibleExitJson) as result:
@@ -99,8 +99,8 @@ def test_vmpreset_is_absent():
 
     # State as "returned" by the "k8s cluster":
     resource_args = dict(kind=KIND, **RESOURCE_DEFAULT_ARGS)
-    KubeVirtRawModule.find_supported_resource.return_value = openshiftdynamic.Resource(**resource_args)
-    openshiftdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
+    KubeVirtRawModule.find_supported_resource.return_value = kubernetesdynamic.Resource(**resource_args)
+    kubernetesdynamic.Resource.get.return_value = None  # Object doesn't exist in the cluster
 
     # Run code:
     with pytest.raises(AnsibleExitJson) as result:

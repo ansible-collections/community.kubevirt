@@ -19,7 +19,7 @@ short_description: Manage PVCs on Kubernetes
 author: KubeVirt Team (@kubevirt)
 
 description:
-  - Use Openshift Python SDK to manage PVCs on Kubernetes
+  - Use Kubernetes Python SDK to manage PVCs on Kubernetes
   - Support Containerized Data Importer out of the box
 
 options:
@@ -139,12 +139,12 @@ options:
     default: 300
 
 extends_documentation_fragment:
-- community.kubernetes.k8s_auth_options
+- kubernetes.core.k8s_auth_options
 
 
 requirements:
-  - python >= 2.7
-  - openshift >= 0.8.2
+  - python >= 3.6
+  - kubernetes >= 12.0.1
 '''
 
 EXAMPLES = '''
@@ -250,9 +250,12 @@ import copy
 import traceback
 
 from collections import defaultdict
+from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils._text import to_native
 
-from ansible_collections.community.kubernetes.plugins.module_utils.common import AUTH_ARG_SPEC
-from ansible_collections.community.kubernetes.plugins.module_utils.raw import KubernetesRawModule
+from ansible_collections.kubernetes.core.plugins.module_utils.common import K8sAnsibleMixin, get_api_client
+from ansible_collections.kubernetes.core.plugins.module_utils.args_common import AUTH_ARG_SPEC
+
 from ansible_collections.community.kubevirt.plugins.module_utils.kubevirt import virtdict, KubeVirtRawModule
 
 
@@ -305,9 +308,15 @@ class CreatePVCFailed(Exception):
     pass
 
 
-class KubevirtPVC(KubernetesRawModule):
+class KubevirtPVC(K8sAnsibleMixin):
     def __init__(self):
-        super(KubevirtPVC, self).__init__()
+        self.module = AnsibleModule(
+            argument_spec=self.argspec,
+            supports_check_mode=True,
+        )
+        self.fail_json = self.module.fail_json
+
+        super(KubevirtPVC, self).__init__(self.module)
 
     @property
     def argspec(self):
@@ -436,7 +445,7 @@ class KubevirtPVC(KubernetesRawModule):
         # 'resource_definition:' has lower priority than module parameters
         definition = dict(KubeVirtRawModule.merge_dicts(definition, self.resource_definitions[0]))
 
-        self.client = self.get_api_client()
+        self.client = get_api_client(self.module)
         resource = self.find_resource(KIND, API, fail=True)
         definition = self.set_defaults(resource, definition)
         result = self.perform_action(resource, definition)
