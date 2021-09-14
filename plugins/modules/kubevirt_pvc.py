@@ -43,6 +43,7 @@ options:
     choices:
     - present
     - absent
+    type: str
   force:
     description:
     - If set to C(True), and I(state) is C(present), an existing object will be replaced.

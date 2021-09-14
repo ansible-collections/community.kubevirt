@@ -28,14 +28,18 @@ options:
     description:
       - Use to specify the name of the target PersistentVolumeClaim.
     required: true
+    type: str
   pvc_namespace:
     description:
       - Use to specify the namespace of the target PersistentVolumeClaim.
     required: true
+    type: str
   upload_host:
     description:
       - URL containing the host and port on which the CDI Upload Proxy is available.
       - "More info: U(https://github.com/kubevirt/containerized-data-importer/blob/master/doc/upload.md#expose-cdi-uploadproxy-service)"
+    required: true
+    type: str
   upload_host_validate_certs:
     description:
       - Whether or not to verify the CDI Upload Proxy's SSL certificates against your system's CA trust store.
@@ -45,6 +49,8 @@ options:
   path:
     description:
       - Path of local image file to transfer.
+    required: true
+    type: str
   merge_type:
     description:
       - Whether to override the default patch merge approach with a specific type. By default, the strategic
