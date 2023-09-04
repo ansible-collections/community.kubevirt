@@ -1,4 +1,7 @@
 # KubeVirt Collection for Ansible
+
+THIS COLLECTION IS **UNMAINTAINED** AND DOES NOT WORK CORRECTLY WITH THE LATEST VERSIONS OF ANSIBLE!. Take a look if a replacing collection [kubevirt.core](https://github.com/kubevirt/kubevirt.core) provides functionality you need. If you're interested in fixing and maintaining `community.kubevirt`, please respond in the [issue](https://github.com/ansible-collections/community.kubevirt/issues/27) but we highly recommend you to consider contributing to [kubevirt.core](https://github.com/kubevirt/kubevirt.core) instead.
+
 <!-- Add CI and code coverage badges here. Samples included below. -->
 [![CI](https://github.com/ansible-collections/community.kubevirt/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/community.kubevirt/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/community.kubevirt)](https://codecov.io/gh/ansible-collections/community.kubevirt)
 
