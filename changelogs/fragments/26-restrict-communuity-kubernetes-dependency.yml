@@ -1,2 +1,0 @@
-minor_changes:
-  - Add upper bound to the community.kubernetes dependency (https://github.com/ansible-collections/community.kubevirt/pull/26).

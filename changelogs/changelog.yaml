@@ -16,3 +16,24 @@ releases:
     fragments:
     - 1.0.0.yaml
     release_date: '2020-12-22'
+  1.1.0:
+    changes:
+      bugfixes:
+      - kubevirt_vm - Adds missing ``storageClassName`` and ``volumeMode`` parameters
+        to datavol class (https://github.com/ansible-collections/community.kubevirt/issues/12)
+      - kubevirt_vm - Create datavol before cloudinit disk as its more likely to be
+        a boot volume (https://github.com/ansible-collections/community.kubevirt/pull/20)
+      minor_changes:
+      - Add upper bound to the community.kubernetes dependency (https://github.com/ansible-collections/community.kubevirt/pull/26).
+      release_summary: -| This collection is unmaintained and does not work correctly
+        with the latest versions of Ansible! Take a look if replacing with collection
+        kubevirt.core provides the functionality you need. If you're interested in
+        fixing and maintaining community.kubevirt please step up, but we highly recommend
+        you to consider contributing to kubevirt.core instead.
+    fragments:
+    - 0-copy_ignore_txt.yml
+    - 1.1.0.yml
+    - 26-restrict-communuity-kubernetes-dependency.yml
+    - add-missing-datavol-params.yaml
+    - promote-datavol-over-cloudinit.yaml
+    release_date: '2023-09-04'
